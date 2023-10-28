@@ -25,22 +25,22 @@ class ItemBuilder {
 	}
 
 	public ItemBuilder brie() {
-		name = "Aged Brie";
+		name = GildedRose.NAME_AGED_BRIE;
 		return this;
 	}
 
 	public ItemBuilder legendary() {
-		name = "Sulfuras, Hand of Ragnaros";
+		name = GildedRose.NAME_LEGENDARY;
 		return this;
 	}
 
 	public ItemBuilder backstage() {
-		name = "Backstage passes to a TAFKAL80ETC concert";
+		name = GildedRose.NAME_BACKSTAGE_PASS;
 		return this;
 	}
 
 	public ItemBuilder conjured() {
-		name = "Conjured Mana Cake";
+		name = GildedRose.NAME_CONJURED;
 		return this;
 	}
 
