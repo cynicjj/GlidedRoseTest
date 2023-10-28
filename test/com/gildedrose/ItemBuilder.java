@@ -6,6 +6,10 @@ class ItemBuilder {
 	private int sellIn = 73;
 	private int quality = 73;
 
+	public static ItemBuilder anItem() {
+		return new ItemBuilder();
+	}
+
 	public ItemBuilder sellIn(int sellIn) {
 		this.sellIn = sellIn;
 		return this;

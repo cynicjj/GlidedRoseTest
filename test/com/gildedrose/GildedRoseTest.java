@@ -1,8 +1,9 @@
 package com.gildedrose;
 
-import org.junit.jupiter.api.Test;
-
+import static com.gildedrose.ItemBuilder.anItem;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
 
 class GildedRoseTest {
 
@@ -14,9 +15,7 @@ class GildedRoseTest {
 		assertEquals(normalItem.sellIn, initialSellIn - 1);
 	}
 
-	private ItemBuilder anItem() {
-		return new ItemBuilder();
-	}
+	
 
 	private void dayAfter(Item concernedItem) {
 		GildedRose app = new GildedRose(new Item[] { concernedItem });
