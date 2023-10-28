@@ -2,41 +2,41 @@ package com.gildedrose;
 
 class ItemBuilder {
 
-	private String itemName = "";
-	private int itemSellIn = 23;
-	private int itemQuality = 23;
-	
+	private String name = "no name";
+	private int sellIn = 73;
+	private int quality = 73;
+
 	public ItemBuilder sellIn(int sellIn) {
-		itemSellIn = sellIn;
+		this.sellIn = sellIn;
 		return this;
 	}
 
 	public ItemBuilder quality(int quality) {
-		itemQuality = quality;
+		this.quality = quality;
 		return this;
 	}
 
 	public Item build() {
-		return new Item(itemName, itemSellIn, itemQuality);
+		return new Item(name, sellIn, quality);
 	}
 
 	public ItemBuilder brie() {
-		itemName = "Aged Brie";
+		name = "Aged Brie";
 		return this;
 	}
 
-	public ItemBuilder sulfuras() {
-		itemName = "Sulfuras, Hand of Ragnaros";
+	public ItemBuilder legendary() {
+		name = "Sulfuras, Hand of Ragnaros";
 		return this;
 	}
 
 	public ItemBuilder backstage() {
-		itemName = "Backstage passes to a TAFKAL80ETC concert";
+		name = "Backstage passes to a TAFKAL80ETC concert";
 		return this;
 	}
 
 	public ItemBuilder conjured() {
-		itemName = "Conjured Mana Cake";
+		name = "Conjured Mana Cake";
 		return this;
 	}
 

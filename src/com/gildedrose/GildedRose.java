@@ -1,22 +1,27 @@
 package com.gildedrose;
 
 class GildedRose {
-	Item[] items;
+	private static final int QUALITY_MAX = 50;
+	private static final int QUALITY_LEGENDARY = 80;
+
+	private Item[] items;
 
 	public GildedRose(Item[] items) {
 		this.items = items;
 	}
 
 	public void update() {
-		for (int i = 0; i < items.length; i++) {
+		for (int i = 0; i < items.length; i++)
 			updateItem(items[i]);
-		}
 	}
 
-	// 전설, 백스테이지, 브리, 그 외 노멀
 	private void updateItem(Item item) {
 		updateSellIn(item);
 		updateQuality(item);
+	}
+
+	private void updateSellIn(Item item) {
+		item.sellIn--;
 	}
 
 	private void updateQuality(Item item) {
@@ -25,39 +30,33 @@ class GildedRose {
 		final boolean isLegendary = item.name.equals("Sulfuras, Hand of Ragnaros");
 		final boolean isConjured = item.name.equals("Conjured Mana Cake");
 
-		if (isLegendary) { // 전설 아이템은 퀄리티 80 고정
+		if (isLegendary)
 			updateLegendary(item);
-		} else if (isAgedBrie) { // 브리 치즈
+		else if (isAgedBrie)
 			updateAgedBrie(item);
-		} else if (isBackstagePass) { // 백 스테이지 패스
+		else if (isBackstagePass)
 			updateBackstagePass(item);
-		} else if (isConjured) { // 마법 아이템
+		else if (isConjured)
 			updateConjured(item);
-		} else { // 그 외 노멀 케이스
+		else
 			updateNormal(item);
-		}
+
 	}
 
 	private void updateConjured(Item item) {
 		final boolean isExpired = item.sellIn < 0;
-		if (isExpired) { // 만료일 지나면
-			decreaseQuality(item, 4);
-		} else {
-			decreaseQuality(item, 2);
-		}
+		int decrease = isExpired ? 4 : 2;
+		decreaseQuality(item, decrease);
 	}
 
 	private void updateNormal(Item item) {
 		final boolean isExpired = item.sellIn < 0;
-		if (isExpired) { // 만료일 지나면
-			decreaseQuality(item, 2);
-		} else {
-			decreaseQuality(item, 1);
-		}
+		int decrease = isExpired ? 2 : 1;
+		decreaseQuality(item, decrease);
 	}
 
 	private void decreaseQuality(Item item, int value) {
-		// quality는 음수가 아니다
+		// quality 는 음수가 아니다
 		item.quality = Math.max(item.quality - value, 0);
 	}
 
@@ -66,15 +65,15 @@ class GildedRose {
 		final boolean is0to5 = 0 <= item.sellIn && item.sellIn <= 5; // 공연 당일~5일 전
 		final boolean is6to10 = 6 <= item.sellIn && item.sellIn <= 10; // 공연 6~10일 전
 
-		if (isEnded) {
+		if (isEnded)
 			item.quality = 0;
-		} else if (is0to5) {
+		else if (is0to5)
 			increaseQuality(item, 3);
-		} else if (is6to10) {
+		else if (is6to10)
 			increaseQuality(item, 2);
-		} else {
+		else
 			increaseQuality(item, 1);
-		}
+
 	}
 
 	private void updateAgedBrie(Item item) {
@@ -82,15 +81,10 @@ class GildedRose {
 	}
 
 	private void updateLegendary(Item item) {
-		item.quality = 80;
+		item.quality = QUALITY_LEGENDARY;
 	}
 
 	private void increaseQuality(Item item, int value) {
-		// 퀄리티 최대값 50, 전설 제외
-		item.quality = Math.min(item.quality + value, 50);
-	}
-
-	private void updateSellIn(Item item) {
-		item.sellIn--;
+		item.quality = Math.min(item.quality + value, QUALITY_MAX);
 	}
 }
