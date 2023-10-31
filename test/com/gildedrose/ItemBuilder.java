@@ -25,22 +25,22 @@ class ItemBuilder {
 	}
 
 	public ItemBuilder brie() {
-		name = GildedRose.NAME_AGED_BRIE;
+		name = GildedRoseRefactored.NAME_AGED_BRIE;
 		return this;
 	}
 
 	public ItemBuilder legendary() {
-		name = GildedRose.NAME_LEGENDARY;
+		name = GildedRoseRefactored.NAME_LEGENDARY;
 		return this;
 	}
 
 	public ItemBuilder backstage() {
-		name = GildedRose.NAME_BACKSTAGE_PASS;
+		name = GildedRoseRefactored.NAME_BACKSTAGE_PASS;
 		return this;
 	}
 
 	public ItemBuilder conjured() {
-		name = GildedRose.NAME_CONJURED;
+		name = GildedRoseRefactored.NAME_CONJURED;
 		return this;
 	}
 
