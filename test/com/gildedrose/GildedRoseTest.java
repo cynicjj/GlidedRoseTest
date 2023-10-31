@@ -12,7 +12,7 @@ class GildedRoseTest {
 		int sellIn = 1;
 		Item normal = anItem().sellIn(sellIn).build();
 		dayAfter(normal);
-		assertEquals(sellIn - 1,normal.sellIn);
+		assertEquals(sellIn - 1, normal.sellIn);
 	}
 
 	private void dayAfter(Item concernedItem) {
