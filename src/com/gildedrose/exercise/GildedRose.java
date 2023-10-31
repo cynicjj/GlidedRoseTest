@@ -1,62 +1,91 @@
 package com.gildedrose.exercise;
 
+import static com.gildedrose.exercise.Type.*;
+
 class GildedRose {
-    Item[] items;
 
-    public GildedRose(Item[] items) {
-        this.items = items;
-    }
+	Item[] items;
 
-    public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
-                    }
-                }
-            } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+	public GildedRose(Item[] items) {
+		this.items = items;
+	}
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
+	public void update() {
+		for (Item item : items) {
+			updateSellIn(item);
+			updateQuality(item);
+		}
+	}
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-                    }
-                }
-            }
+	private void updateSellIn(Item item) {
+		setSellIn(item, getSellIn(item) - 1);
+	}
 
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
-            }
+	private void setSellIn(Item item, int newSellIn) {
+		item.sellIn = newSellIn;
+	}
 
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
-                            }
-                        }
-                    } else {
-                        items[i].quality = items[i].quality - items[i].quality;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
-                    }
-                }
-            }
-        }
-    }
+	protected void updateQuality(Item item) {
+		if (isLegendary(item))
+			return;
+		else if (isAgedBrie(item)) {
+			increaseQuality(item);
+		} else if (isBackstagePass(item)) {
+			updateBackStagePass(item);
+		} else { // normal
+			decreaseQuality(item);
+			if (getSellIn(item) < 0)
+				decreaseQuality(item); // 만기 지나면 한번 더 낮춘다
+		}
+	}
+
+	protected void updateBackStagePass(Item item) {
+		increaseQuality(item);
+
+		if (getSellIn(item) < 11) {
+			increaseQuality(item);
+		}
+
+		if (getSellIn(item) < 6) {
+			increaseQuality(item);
+		}
+
+		if (getSellIn(item) < 0) {
+			setQuality(item, 0);
+		}
+	}
+
+	protected void decreaseQuality(Item item) {
+		if (getQuality(item) > 0) {
+			setQuality(item, getQuality(item) - 1);
+		}
+	}
+
+	protected void increaseQuality(Item item) {
+		setQuality(item, Math.min(50, getQuality(item) + 1));
+	}
+
+	private void setQuality(Item item, int newQuality) {
+		item.quality = newQuality;
+	}
+
+	private int getQuality(Item item) {
+		return item.quality;
+	}
+
+	private int getSellIn(Item item) {
+		return item.sellIn;
+	}
+
+	protected boolean isBackstagePass(Item item) {
+		return item.name.equals(BACKSTAGE_PASS.name);
+	}
+
+	protected boolean isAgedBrie(Item item) {
+		return item.name.equals(AGED_BRIE.name);
+	}
+
+	private boolean isLegendary(Item item) {
+		return item.name.equals(LEGENDARY.name);
+	}
 }
